@@ -27,24 +27,21 @@
 buildscript {
     repositories {
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        maven { url "http://oss.jfrog.org/oss-snapshot-local/" }
+        maven { url "https://oss.jfrog.org/oss-snapshot-local/" }
         mavenCentral()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools:r8:3.3.75'          // Must be before the Gradle Plugin for Android.
+        classpath 'com.android.tools.build:gradle:7.2.2' // 谨慎升级，JusPay 在 7.2.2 以上版本存在无法显示图标的问题。升级前请验证
         classpath 'com.github.xfumihiro.view-inspector:view-inspector-plugin:0.1.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
 }
 
-allprojects {
-    repositories {
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        maven { url "http://oss.jfrog.org/oss-snapshot-local/" }
-        jcenter()
-        mavenLocal()
-    }
+plugins {
+    id 'com.android.application' version '7.2.1' apply false
+    id 'com.android.library' version '7.2.1' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
 }
