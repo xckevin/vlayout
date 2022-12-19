@@ -30,6 +30,7 @@ buildscript {
         maven { url "https://oss.jfrog.org/oss-snapshot-local/" }
         mavenCentral()
         jcenter()
+        google()
     }
     dependencies {
         classpath 'com.android.tools:r8:3.3.75'          // Must be before the Gradle Plugin for Android.

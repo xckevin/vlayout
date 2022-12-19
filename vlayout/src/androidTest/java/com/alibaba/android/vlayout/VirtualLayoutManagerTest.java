@@ -28,8 +28,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Looper;
-import android.support.v7.widget.RecyclerView;
-import android.test.ActivityInstrumentationTestCase2;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.rule.ActivityTestRule;
+
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,13 +44,15 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static com.alibaba.android.vlayout.VirtualLayoutManager.HORIZONTAL;
 import static com.alibaba.android.vlayout.VirtualLayoutManager.VERTICAL;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by villadora on 16/2/24.
  */
-public class VirtualLayoutManagerTest extends ActivityInstrumentationTestCase2<Activity> {
+public class VirtualLayoutManagerTest extends ActivityTestRule<Activity> {
 
     private static final String TAG = "VLMTest";
 
@@ -64,13 +67,8 @@ public class VirtualLayoutManagerTest extends ActivityInstrumentationTestCase2<A
     private TestAdapter mTestAdapter;
 
     public VirtualLayoutManagerTest() {
-        super("com.tmall.wireless.tangram", Activity.class);
-    }
-
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+        super(null);
+//        super("com.tmall.wireless.tangram", Activity.class);
     }
 
 
@@ -746,6 +744,14 @@ public class VirtualLayoutManagerTest extends ActivityInstrumentationTestCase2<A
                 }
                 notifyItemRangeRemoved(tuple[0], count);
             }
+        }
+    }
+
+    private void runTestOnUiThread(Runnable runnable) {
+        try {
+            runOnUiThread(runnable);
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 
